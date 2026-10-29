@@ -1,0 +1,54 @@
+
+<h1>Your Cart</h1>
+
+@if (successMessage()) {
+  <p>{{ successMessage() }}</p>
+}
+
+@if (errorMessage()) {
+  <p>{{ errorMessage() }}</p>
+}
+
+@if (_myCart.cart.length === 0) {
+  <p>Your cart is empty.</p>
+} @else {
+  @for (item of _myCart.cart; track item.product._id) {
+    <article>
+      <h2>{{ item.product.name }}</h2>
+      <p>Price: {{ item.product.price }} EGP</p>
+      <p>Quantity: {{ item.quantity }}</p>
+      <p>
+        Subtotal:
+        {{ item.product.price * item.quantity }} EGP
+      </p>
+
+      <button
+        (click)="_myCart.removeFromCart(item.product._id)"
+      >
+        Remove
+      </button>
+    </article>
+  }
+
+  <p>Total items: {{ _myCart.getItemCount() }}</p>
+  <p>Total: {{ _myCart.getTotal() }} EGP</p>
+
+  <label for="adress">Delivery address</label>
+  <br>
+  <textarea
+    id="adress"
+    name="adress"
+    rows="3"
+    placeholder="Street, building, city"
+    [(ngModel)]="adress"
+  ></textarea>
+  <br>
+
+  <button (click)="checkout()" [disabled]="loading()">
+    {{ loading() ? 'Placing order...' : 'Checkout' }}
+  </button>
+
+  <button (click)="_myCart.clearCart()">
+    Clear cart
+  </button>
+}

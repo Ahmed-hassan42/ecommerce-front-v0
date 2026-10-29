@@ -1,0 +1,45 @@
+<h1>Products</h1>
+
+<input
+  type="text"
+  placeholder="Search products..."
+  [(ngModel)]="searchText"
+/>
+
+<select [(ngModel)]="selectedCategory">
+  <option value="all">All categories</option>
+  <option value="women">Women</option>
+  <option value="men">Men</option>
+</select>
+
+<select [(ngModel)]="sortOrder">
+  <option value="default">Default order</option>
+  <option value="low-to-high">Price: low to high</option>
+  <option value="high-to-low">Price: high to low</option>
+</select>
+
+<p>Products found: {{ filteredProducts.length }}</p>
+
+@if (filteredProducts.length === 0) {
+  <p>No matching products found.</p>
+} @else {
+  @for (product of filteredProducts; track product._id) {
+    <article>
+      @if (product.imgURL) {
+        <img
+          [src]="'http://localhost:3000/uploads/' + product.imgURL"
+          [alt]="product.name"
+          width="150"
+        />
+      }
+
+      <h2><a [routerLink]="['/products', product._id]">{{ product.name }}</a></h2>
+      <p>{{ product.price }} EGP</p>
+      <p>Category: {{ product.category }}</p>
+
+      <button (click)="addToCart(product)">
+        Add to cart
+      </button>
+    </article>
+  }
+}

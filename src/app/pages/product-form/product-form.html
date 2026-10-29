@@ -1,0 +1,79 @@
+
+<h1>Add Product</h1>
+
+<form #productForm="ngForm" (ngSubmit)="submitForm(productForm, imgInput)">
+
+  <label for="name">Product name</label>
+  <input
+    id="name"
+    name="name"
+    [(ngModel)]="product.name"
+    required
+    minlength="2"
+  />
+
+  <label for="price">Price (EGP)</label>
+  <input
+    id="price"
+    name="price"
+    type="number"
+    [(ngModel)]="product.price"
+    required
+    min="1"
+  />
+
+  <label for="slug">Slug</label>
+  <input
+    id="slug"
+    name="slug"
+    [(ngModel)]="product.slug"
+    required
+  />
+
+  <label for="category">Category</label>
+  <select
+    id="category"
+    name="category"
+    [(ngModel)]="product.category"
+    required
+  >
+    <option value="" disabled>Select a category</option>
+    <option value="women">Women</option>
+    <option value="men">Men</option>
+  </select>
+
+  <label for="subCategory">Subcategory</label>
+  <input
+    id="subCategory"
+    name="subCategory"
+    [(ngModel)]="product.subCategory"
+    required
+  />
+
+<label for="img">Product image</label>
+<input
+  #imgInput
+  id="img"
+  name="img"
+  type="file"
+  accept="image/*"
+  (change)="onImageSelected($event)"
+  required
+/>
+
+  @if (errorMessage) {
+    <p>{{ errorMessage }}</p>
+  }
+
+  @if (successMessage) {
+    <p>{{ successMessage }}</p>
+  }
+
+  <button
+    type="submit"
+    [disabled]="productForm.invalid || !selectedImage"
+  >
+    Add Product
+  </button>
+
+</form>

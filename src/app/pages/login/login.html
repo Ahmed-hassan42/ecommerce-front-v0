@@ -1,0 +1,25 @@
+<h1>Login</h1>
+
+<form (ngSubmit)="submit()">
+  <label>Email</label>
+  <input
+    type="email"
+    name="email"
+    [(ngModel)]="email"
+    required
+  />
+
+  <label>Password</label>
+  <input
+    type="password"
+    name="password"
+    [(ngModel)]="password"
+    required
+  />
+
+  <button type="submit">Login</button>
+</form>
+
+@if (errorMessage) {
+  <p>{{ errorMessage }}</p>
+}

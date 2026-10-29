@@ -1,0 +1,26 @@
+header,
+main,
+footer {
+  padding: 20px;
+}
+
+header {
+  background: #f0f0f0;
+}
+
+nav {
+  display: flex;
+  gap: 20px;
+}
+
+main {
+  min-height: 300px;
+}
+
+footer {
+  border-top: 1px solid #ddd;
+}
+
+body {
+  background-color: lightblue;
+}

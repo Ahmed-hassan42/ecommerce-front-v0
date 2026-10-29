@@ -1,0 +1,27 @@
+<a routerLink="/products">&larr; Back to products</a>
+
+@if (loading()) {
+  <p>Loading...</p>
+} @else if (errorMessage()) {
+  <p>{{ errorMessage() }}</p>
+} @else if (product(); as p) {
+  <h1>{{ p.name }}</h1>
+
+  @if (p.imgURL) {
+    <img
+      [src]="'http://localhost:3000/uploads/' + p.imgURL"
+      [alt]="p.name"
+      width="300"
+    />
+  }
+
+  <p>Price: {{ p.price }} EGP</p>
+  <p>Category: {{ p.category }}</p>
+  <p>Subcategory: {{ p.subCategory }}</p>
+
+  <button (click)="addToCart()">Add to cart</button>
+
+  @if (added()) {
+    <p>Added to cart. <a routerLink="/cart">Go to cart</a></p>
+  }
+}

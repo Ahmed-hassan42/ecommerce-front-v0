@@ -1,0 +1,29 @@
+<nav>
+  <a routerLink="/">Home</a>
+  |
+  <a routerLink="/products">Products</a>
+  |
+  <a routerLink="/testimonials">Testimonials</a>
+  |
+  <a routerLink="/cart">Cart ({{ cartService.getItemCount() }})</a>
+
+  @if (auth.isLoggedIn()) {
+    @if (auth.isAdmin()) {
+      |
+      <a routerLink="/dashboard">Dashboard</a>
+      |
+      <a routerLink="/productform">Add product</a>
+    }
+    |
+    <button type="button" (click)="logout()">Logout</button>
+  } @else {
+    |
+    <a routerLink="/login">Login</a>
+    |
+    <a routerLink="/registration">Registration</a>
+  }
+</nav>
+
+<hr>
+
+<router-outlet />

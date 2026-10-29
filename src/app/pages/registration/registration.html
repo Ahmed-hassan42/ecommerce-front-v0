@@ -1,0 +1,51 @@
+<h1>Create Account</h1>
+
+<form
+  [formGroup]="registrationForm"
+  (ngSubmit)="submitForm()"
+>
+  <label for="name">Name</label>
+  <input id="name" formControlName="name" />
+
+  @if (
+    registrationForm.controls.name.invalid &&
+    registrationForm.controls.name.touched
+  ) {
+    <p>Enter a name with at least 2 characters.</p>
+  }
+
+  <label for="email">Email</label>
+  <input id="email" type="email" formControlName="email" />
+
+  @if (
+    registrationForm.controls.email.invalid &&
+    registrationForm.controls.email.touched
+  ) {
+    <p>Enter a valid email address.</p>
+  }
+
+  <label for="password">Password</label>
+  <input
+    id="password"
+    type="password"
+    formControlName="password"
+  />
+
+  @if (
+    registrationForm.controls.password.invalid &&
+    registrationForm.controls.password.touched
+  ) {
+    <p>Password must contain at least 8 characters.</p>
+  }
+
+  @if (errorMessage()) {
+    <p>{{ errorMessage() }}</p>
+  }
+  @if (successMessage()) {
+    <p>{{ successMessage() }}</p>
+  }
+
+  <button type="submit" [disabled]="registrationForm.invalid">
+    Register
+  </button>
+</form>

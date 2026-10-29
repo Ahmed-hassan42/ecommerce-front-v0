@@ -1,0 +1,75 @@
+<main class="dashboard">
+  <header class="dashboard-header">
+    <div>
+      <h1>Admin dashboard</h1>
+      <p>Manage the store's products and review its current totals.</p>
+    </div>
+    <a class="primary-link" routerLink="/productform">Add product</a>
+  </header>
+
+  @if (errorMessage) {
+    <p class="message error" role="alert">{{ errorMessage }}</p>
+  }
+  @if (successMessage) {
+    <p class="message success" role="status">{{ successMessage }}</p>
+  }
+
+  @if (stats) {
+    <section class="stats" aria-label="Store statistics">
+      <article class="stat-card"><span>Products</span><strong>{{ stats.totalProducts }}</strong></article>
+      <article class="stat-card"><span>Active products</span><strong>{{ stats.activeProducts }}</strong></article>
+      <article class="stat-card"><span>Soft-deleted products</span><strong>{{ stats.deletedProducts }}</strong></article>
+      <article class="stat-card"><span>Orders</span><strong>{{ stats.totalOrders }}</strong></article>
+      <article class="stat-card"><span>Customers</span><strong>{{ stats.totalUsers }}</strong></article>
+    </section>
+  }
+
+  <section class="products-section">
+    <div class="section-heading">
+      <h2>Product management</h2>
+      <button type="button" (click)="loadDashboard()">Refresh</button>
+    </div>
+
+    @if (loading) {
+      <p>Loading products...</p>
+    } @else if (products.length === 0) {
+      <p>No active products to manage.</p>
+    } @else {
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Slug</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (product of products; track product._id) {
+              <tr>
+                <td class="product-cell">
+                  @if (product.imgURL) {
+                    <img [src]="'http://localhost:3000/uploads/' + product.imgURL" [alt]="product.name">
+                  }
+                  <span>{{ product.name }}</span>
+                </td>
+                <td>{{ product.slug }}</td>
+                <td>{{ product.category }} / {{ product.subCategory }}</td>
+                <td>{{ product.price }} EGP</td>
+                <td>{{ product.isActive ? 'Active' : 'Inactive' }}</td>
+                <td>
+                  <button class="delete-button" type="button" (click)="deleteProduct(product)">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+</main>
